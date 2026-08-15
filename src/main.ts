@@ -90,6 +90,24 @@ function reservarAsiento(matriz: number[][], row: number, col: number): boolean 
 // Example
 reservarAsiento(matriz, 6, 8); // reservas
 reservarAsiento(matriz, 4, 6); // reserva
+reservarAsiento(matriz, 6, 2); // Should reserve the seat
+reservarAsiento(matriz, 7, 2);
 current_state(matriz);
+
+// funcion to add validation
+
+function validation_seat(matriz: number[][]): number {
+    for (let r = 0; r < matriz.length; r++) {
+        for (let c = 0; c < matriz[r].length; c++) {
+            if (matriz[r][c] !== 0 && matriz[r][c] !== 1) {
+                return r * matriz[r].length + c; // Return the index of the invalid seat
+            }
+        }
+    }
+    return -1; // All seats are valid
+}
+
+console.log(validation_seat(matriz))
+
 
 export {};
