@@ -109,5 +109,25 @@ function validation_seat(matriz: number[][]): number {
 
 console.log(validation_seat(matriz))
 
+// function to count seats are occupied and free
+function count_seats(matriz: number[][]) : {occupied: number; free: number}{
+  let occupied = 0;
+  let free = 0;
+
+  for (let r=0; r < matriz.length; r++){
+    for (let c = 0; c< matriz[r].length; c++){
+      if (matriz[r][c] === 1){
+        occupied++;
+      } else if (matriz[r][c] ===0){
+        free++;
+      }
+    }
+  }
+  return {occupied, free}
+}
+
+let seatCount = count_seats(matriz);
+console.log(`Asientos ocupados: ${seatCount.occupied}, asientos libres: ${seatCount.free}`)
+
 
 export {};
