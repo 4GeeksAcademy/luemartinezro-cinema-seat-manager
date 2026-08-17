@@ -129,5 +129,51 @@ function count_seats(matriz: number[][]) : {occupied: number; free: number}{
 let seatCount = count_seats(matriz);
 console.log(`Asientos ocupados: ${seatCount.occupied}, asientos libres: ${seatCount.free}`)
 
+// Interfaz para devolver las posiciones de manera estructurada
+interface ParAsientosAdyacentes {
+    row: number;
+    col1: number;
+    col2: number;
+}
+
+
+function buscarDosAsientosAdyacentes(matriz: number[][]): ParAsientosAdyacentes | null {
+    if (matriz.length === 0 || matriz[0].length === 0) {
+        console.log("No se encontraron asientos adyacentes: la sala está vacía o es inválida.");
+        return null;
+    }
+
+    // Recorremos fila por fila (de arriba a abajo)
+    for (let r = 0; r < matriz.length; r++) {
+        // Recorremos las columnas hasta la penúltima (para poder comparar con c + 1)
+        for (let c = 0; c < matriz[r].length - 1; c++) {
+            // Si el asiento actual y el siguiente en la misma fila están libres (0)
+            if (matriz[r][c] === 0 && matriz[r][c + 1] === 0) {
+                console.log(`Éxito: Se encontraron dos asientos adyacentes libres en la fila ${r}, columnas ${c} y ${c + 1}.`);
+                return { row: r, col1: c, col2: c + 1 };
+            }
+        }
+    }
+
+    // Si el bucle termina sin retornar, no hay pares adyacentes
+    console.log("No se encontraron dos asientos adyacentes disponibles en la misma fila.");
+    return null;
+}
+
+console.log("\n--- Búsqueda de asientos adyacentes (Escenario 1: Sí hay) ---");
+const resultado1 = buscarDosAsientosAdyacentes(matriz);
+console.log("Resultado devuelto:", resultado1);
+
+console.log("\n--- Búsqueda de asientos adyacentes (Escenario 2: Llenamos la sala para probar el fallo) ---");
+// Llenamos toda la matriz para forzar que no haya asientos adyacentes libres
+for (let r = 0; r < matriz.length; r++) {
+    for (let c = 0; c < matriz[r].length; c++) {
+        matriz[r][c] = 1;
+    }
+}
+
+const resultado2 = buscarDosAsientosAdyacentes(matriz);
+console.log("Resultado devuelto:", resultado2);
+
 
 export {};
